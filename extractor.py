@@ -7,6 +7,15 @@ class NumberExtractor(Extractor):
         super(NumberExtractor, self).__init__(NUMBER)
 
     def replace(self, text):
+        """
+        Замена чисел в тексте без их группировки
+
+        Аргументы:
+            text: исходный текст
+
+        Результат:
+            new_text: текст с замененными числами
+        """
         if text:
             new_text = ""
             start = 0
@@ -28,6 +37,15 @@ class NumberExtractor(Extractor):
             return None
     
     def replace_groups(self, text):
+        """
+        Замена сгруппированных составных чисел в тексте
+
+        Аргументы:
+            text: исходный текст
+
+        Результат:
+            new_text: текст с замененными числами
+        """
         if text:
             start = 0
             matches = list(self.parser.findall(text))
