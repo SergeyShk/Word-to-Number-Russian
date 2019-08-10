@@ -42,7 +42,11 @@ NUMS_RAW = {
     'шестьсот': 600,
     'семьсот': 700,
     'восемьсот': 800,
-    'девятьсот': 900
+    'девятьсот': 900,
+    'тысяча': 10**3,
+    'миллион': 10**6,
+    'миллиард': 10**9,
+    'триллион': 10**12,
 }
 DOT = eq('.')
 INT = type('INT')
@@ -63,13 +67,18 @@ MILLIARD = or_(
     rule(caseless('млрд'), DOT.optional()),
     rule(normalized('миллиард'))
 ).interpretation(const(10**9))
+TRILLION = or_(
+    rule(caseless('трлн'), DOT.optional()),
+    rule(normalized('триллион'))
+).interpretation(const(10**12))
 MULTIPLIER = or_(
     THOUSANDTH,
     HUNDREDTH,
     TENTH,
     THOUSAND,
     MILLION,
-    MILLIARD
+    MILLIARD,
+    TRILLION
 ).interpretation(Number.multiplier)
 NUM_RAW = rule(morph_pipeline(NUMS_RAW).interpretation(Number.int.normalized().custom(NUMS_RAW.get)))
 NUM_INT = rule(INT).interpretation(Number.int.custom(int))
