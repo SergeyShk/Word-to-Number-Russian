@@ -9,7 +9,7 @@
 
 Установка библиотек:
 
-`$ pip install yargy natasha`
+`$ pip install -r requirements.txt`
 
 ## Структура проекта
 
