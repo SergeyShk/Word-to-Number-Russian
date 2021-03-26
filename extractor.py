@@ -37,7 +37,7 @@ class NumberExtractor(Extractor):
 
     def replace(self, text):
         """
-        Replace numerical in text without grouping 
+        Replaces numerical in text without grouping 
 
         Args:
             text: initial text
@@ -88,7 +88,7 @@ class NumberExtractor(Extractor):
 
     def replace_groups(self, text):
         """
-        Replace groups of numerical by summation
+        Replaces groups of numerical by summation
 
         Args:
             text: initial text
@@ -122,4 +122,52 @@ class NumberExtractor(Extractor):
             start = group[2]
         new_text += text[start:]
 
+        return new_text
+
+
+    def replace_groups2(self, text):
+        """
+        Replaces groups of numerical not only by summation but stand alone numbers too
+
+        Args:
+            text: initial text
+
+        Result:
+            new_text: text with numbers
+        """
+        groups = self._get_groups(text)
+        new_text = ''
+        start = 0
+        for group in groups:
+            new_text += text[start: group[1]]
+
+            nums = []
+            prev_tz = 0
+            prev_mult = None
+            for match in group[0]:
+                mult = match.multiplier if match.multiplier else 1
+                curr_num = match.int
+                tz = self.trailing_zeros(curr_num)
+                if (tz < prev_tz) and (mult >= prev_mult) and curr_num != 0  and (self.n_digits(curr_num) < self.n_digits(nums[0][0])):
+                    nums[0] = (nums[0][0] + curr_num, mult)
+                else:
+                    nums.insert(0, (curr_num, mult))
+                prev_mult = mult
+                prev_tz = tz
+
+            prev_mult = None
+            new_nums = []
+            for num, mult in nums:
+                if not prev_mult or mult <= prev_mult:
+                    new_nums.append(num * mult)
+                else:
+                    new_nums[-1] += num * mult
+                prev_mult = mult
+
+            new_nums.reverse()
+            new_text += ' '.join(map(str, new_nums))
+            start = group[2]
+            
+        new_text += text[start:]
+        
         return new_text
