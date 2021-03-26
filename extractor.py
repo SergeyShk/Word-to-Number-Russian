@@ -1,11 +1,39 @@
 from number import NUMBER
 from natasha.extractors import Extractor
-from yargy.parser import Match
+import math 
+
 
 class NumberExtractor(Extractor):
     def __init__(self):
         super(NumberExtractor, self).__init__(NUMBER)
 
+
+    def n_digits(self, n):
+        if n > 0:
+            digits = int(math.log10(n)) + 1
+        elif n == 0:
+            digits = 1
+        else:
+            digits = int(math.log10(-n)) + 2 # +1 if you don't count the '-'
+        
+        return digits
+
+
+    def trailing_zeros(self, n: int):
+        """
+        Count trailing zeros of a number
+        
+        Args:
+            n: number
+        
+        Result:
+            cnt: count of zeros
+        """
+        cnt = 0
+        while n % 10 == 0 and n != 0:
+            cnt += 1
+            n = n / 10
+        return cnt
 
     def replace(self, text):
         """
