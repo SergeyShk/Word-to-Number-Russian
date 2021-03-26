@@ -6,15 +6,16 @@ class NumberExtractor(Extractor):
     def __init__(self):
         super(NumberExtractor, self).__init__(NUMBER)
 
+
     def replace(self, text):
         """
-        Замена чисел в тексте без их группировки
+        Replace numerical in text without grouping 
 
-        Аргументы:
-            text: исходный текст
+        Args:
+            text: initial text
 
-        Результат:
-            new_text: текст с замененными числами
+        Result:
+            new_text: text with numbers
         """
         if text:
             new_text = ""
