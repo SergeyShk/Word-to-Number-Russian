@@ -37,13 +37,13 @@ class NumberExtractor(Extractor):
 
     def replace(self, text):
         """
-        Replaces numerical in text without grouping 
+        Замена чисел в тексте без их группировки
 
-        Args:
-            text: initial text
+        Аргументы:
+            text: исходный текст
 
-        Result:
-            new_text: text with numbers
+        Результат:
+            new_text: текст с замененными числами
         """
         if text:
             new_text = ""
@@ -88,13 +88,13 @@ class NumberExtractor(Extractor):
 
     def replace_groups(self, text):
         """
-        Replaces groups of numerical by summation
+        Замена сгруппированных составных чисел в тексте
 
-        Args:
-            text: initial text
+        Аргументы:
+            text: исходный текст
 
-        Result:
-            new_text: text with numbers
+        Результат:
+            new_text: текст с замененными числами
         """
         
         groups = self._get_groups(text)
@@ -125,15 +125,15 @@ class NumberExtractor(Extractor):
         return new_text
 
 
-    def replace_groups2(self, text):
+    def replace_groups_sa(self, text):
         """
-        Replaces groups of numerical not only by summation but stand alone numbers too
+        Замена сгруппированных составных чисел в тексте и отдельно стоящих чисел без их суммирования
 
-        Args:
-            text: initial text
+        Аргументы:
+            text: исходный текст
 
-        Result:
-            new_text: text with numbers
+        Результат:
+            new_text: текст с замененными числами
         """
         groups = self._get_groups(text)
         new_text = ''
